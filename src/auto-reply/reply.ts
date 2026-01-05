@@ -1214,6 +1214,7 @@ export async function getReplyFromConfig(
         verboseLevel: resolvedVerboseLevel,
         timeoutMs,
         runId,
+        isHeartbeat: opts?.isHeartbeat,
         onPartialReply: opts?.onPartialReply
           ? async (payload) => {
               await startTypingOnText(payload.text);

@@ -339,6 +339,7 @@ export async function runEmbeddedPiAgent(params: {
   extraSystemPrompt?: string;
   ownerNumbers?: string[];
   enforceFinalTag?: boolean;
+  isHeartbeat?: boolean;
 }): Promise<EmbeddedPiRunResult> {
   const sessionLane = resolveSessionLane(
     params.sessionKey?.trim() || params.sessionId,
@@ -492,6 +493,7 @@ export async function runEmbeddedPiAgent(params: {
           onPartialReply: params.onPartialReply,
           onAgentEvent: params.onAgentEvent,
           enforceFinalTag: params.enforceFinalTag,
+          isHeartbeat: params.isHeartbeat,
         });
 
         const abortTimer = setTimeout(

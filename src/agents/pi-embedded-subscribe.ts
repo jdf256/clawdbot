@@ -66,6 +66,7 @@ export function subscribeEmbeddedPiSession(params: {
     data: Record<string, unknown>;
   }) => void;
   enforceFinalTag?: boolean;
+  isHeartbeat?: boolean;
 }) {
   const assistantTexts: string[] = [];
   const toolMetas: Array<{ toolName?: string; meta?: string }> = [];
@@ -313,7 +314,13 @@ export function subscribeEmbeddedPiSession(params: {
             params.enforceFinalTag && cleaned
               ? (extractFinalText(cleaned)?.trim() ?? cleaned)
               : cleaned;
-          if (text) assistantTexts.push(text);
+          if (text) {
+            if (params.isHeartbeat) {
+              // Heartbeat mode: only keep final message, discard intermediate thinking
+              assistantTexts.length = 0;
+            }
+            assistantTexts.push(text);
+          }
           deltaBuffer = "";
         }
       }
